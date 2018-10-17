@@ -1,13 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Platform } from 'react-native';
 
 export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
+        <Text style={[styles.largeText, styles.textStyle]}>San Francisco</Text>
+        <Text style={[styles.smallText, styles.textStyle]}>Light Cloud</Text>
+        <Text style={[styles.largeText, styles.textStyle]}>24°</Text>
       </View>
     );
   }
@@ -19,5 +19,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  textStyle: {
+    textAlign: 'center',
+    fontFamily: Platform.OS === 'ios' ? 'AvenirNext-Regular' : 'Roboto',
+  },
+  largeText: {
+    fontSize: 44,
+  },
+  smallText: {
+    fontSize: 18,
   },
 });

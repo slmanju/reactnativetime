@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, Platform, TextInput, KeyboardAvoidingView, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, Platform, TextInput, KeyboardAvoidingView, ImageBackground,
+ActivityIndicator, StatusBar, } from 'react-native';
 
 import SearchInput from './components/SearchInput';
 
@@ -8,15 +9,16 @@ export default class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      location: 'San Francisco'
+      location: ''
     }
   }
 
   componentDidMount() {
     console.log('Component has mounted!');
+    this.handleUpdateLocation('Piliyandala');
   }
 
-  submitLocation = (newLocation) => {
+  handleUpdateLocation = (newLocation) => {
     this.setState({ location: newLocation });
   }
 
@@ -24,12 +26,14 @@ export default class App extends React.Component {
     const { location } = this.state;
     return (
       <KeyboardAvoidingView style={ styles.container } behavior="padding">
+        <StatusBar barStyle="light-content" />
         <ImageBackground source={ require('./assets/clear.png') } style={styles.imageContainer} imageStyle={styles.image}>
           <View style={styles.detailsContainer}>
+            <ActivityIndicator animating={ true } color="white" size="large" />
             <Text style={[styles.largeText, styles.textStyle]}>{ location }</Text>
             <Text style={[styles.smallText, styles.textStyle]}>Light Cloud</Text>
             <Text style={[styles.largeText, styles.textStyle]}>24°</Text>
-            <SearchInput submitLocation={ this.submitLocation } />
+            <SearchInput submitLocation={ this.handleUpdateLocation } />
           </View>
         </ImageBackground>
       </KeyboardAvoidingView>

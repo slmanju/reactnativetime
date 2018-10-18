@@ -6,13 +6,12 @@ export default class SearchInput extends Component {
   render() {
     return (
       <View>
-        <TextInput
-                  autoCorrect={ false }
+        <TextInput autoCorrect={ false }
                   placeholder="Search any city"
                   placeholderTextColor="white"
+                  underlineColorAndroid="transparent"
                   style={ styles.textInput }
-                  clearButtonMode="always"
-                  />
+                  clearButtonMode="always" />
       </View>
     );
   }
@@ -29,7 +28,12 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   textInput: {
-    flex: 1,
-    color: 'white',
+    backgroundColor: "#666",
+    color: "white",
+    height: 40,
+    width: 300,
+    marginTop: 20,
+    marginHorizontal: 10,
+    alignSelf: "center"
   },
 });

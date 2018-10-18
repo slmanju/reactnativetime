@@ -4,15 +4,32 @@ import { StyleSheet, Text, View, Platform, TextInput, KeyboardAvoidingView, Imag
 import SearchInput from './components/SearchInput';
 
 export default class App extends React.Component {
+
+  constructor() {
+    super();
+    this.state = {
+      location: 'San Francisco'
+    }
+  }
+
+  componentDidMount() {
+    console.log('Component has mounted!');
+  }
+
+  submitLocation = (newLocation) => {
+    this.setState({ location: newLocation });
+  }
+
   render() {
+    const { location } = this.state;
     return (
       <KeyboardAvoidingView style={ styles.container } behavior="padding">
         <ImageBackground source={ require('./assets/clear.png') } style={styles.imageContainer} imageStyle={styles.image}>
           <View style={styles.detailsContainer}>
-            <Text style={[styles.largeText, styles.textStyle]}>San Francisco</Text>
+            <Text style={[styles.largeText, styles.textStyle]}>{ location }</Text>
             <Text style={[styles.smallText, styles.textStyle]}>Light Cloud</Text>
             <Text style={[styles.largeText, styles.textStyle]}>24°</Text>
-            <SearchInput />
+            <SearchInput submitLocation={ this.submitLocation } />
           </View>
         </ImageBackground>
       </KeyboardAvoidingView>

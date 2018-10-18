@@ -3,15 +3,36 @@ import { StyleSheet, TextInput, View } from 'react-native';
 
 export default class SearchInput extends Component {
 
+  constructor() {
+    super();
+    this.state = {
+      text: ''
+    }
+  }
+
+  handleChangeText = (newText) => {
+    this.setState({ text: newText });
+  }
+
+  handleSubmitEditing = () => {
+    const { text } = this.state;
+    if (!text) return;
+    this.props.submitLocation(text);
+  }
+
   render() {
+    const { text } = this.state;
     return (
       <View>
         <TextInput autoCorrect={ false }
+                  value={ text }
                   placeholder="Search any city"
                   placeholderTextColor="white"
                   underlineColorAndroid="transparent"
                   style={ styles.textInput }
-                  clearButtonMode="always" />
+                  clearButtonMode="always"
+                  onChangeText={ this.handleChangeText }
+                  onSubmitEditing={ this.handleSubmitEditing } />
       </View>
     );
   }

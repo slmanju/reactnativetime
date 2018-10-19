@@ -4,35 +4,47 @@ ActivityIndicator, StatusBar, } from 'react-native';
 
 import SearchInput from './components/SearchInput';
 
+import weatherService from './utils/WeatherService';
+
 export default class App extends React.Component {
 
   constructor() {
     super();
     this.state = {
-      location: ''
+      location: '',
+      temperature: 0,
+      description: '',
+      loading: true
     }
   }
 
   componentDidMount() {
-    console.log('Component has mounted!');
     this.handleUpdateLocation('Piliyandala');
   }
 
   handleUpdateLocation = (newLocation) => {
-    this.setState({ location: newLocation });
+    this.setState({ loading: true });
+    weatherService.findCurrentWeather(newLocation).then(weather => {
+      this.setState({
+        location: newLocation,
+        temperature: weather.temperature,
+        description: weather.description,
+        loading: false
+      })
+    }).catch(error => this.setState({ loading: false }));
   }
 
   render() {
-    const { location } = this.state;
+    const { location, temperature, description, loading } = this.state;
     return (
       <KeyboardAvoidingView style={ styles.container } behavior="padding">
         <StatusBar barStyle="light-content" />
         <ImageBackground source={ require('./assets/clear.png') } style={styles.imageContainer} imageStyle={styles.image}>
           <View style={styles.detailsContainer}>
-            <ActivityIndicator animating={ true } color="white" size="large" />
+            { loading && <ActivityIndicator animating={ loading } color="white" size="large" /> }
             <Text style={[styles.largeText, styles.textStyle]}>{ location }</Text>
-            <Text style={[styles.smallText, styles.textStyle]}>Light Cloud</Text>
-            <Text style={[styles.largeText, styles.textStyle]}>24°</Text>
+            <Text style={[styles.smallText, styles.textStyle]}>{ description }</Text>
+            <Text style={[styles.largeText, styles.textStyle]}>{ temperature }°</Text>
             <SearchInput submitLocation={ this.handleUpdateLocation } />
           </View>
         </ImageBackground>
